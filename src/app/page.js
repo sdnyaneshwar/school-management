@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white flex flex-col items-center justify-center py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white flex text-gray-500 flex-col items-center justify-center py-10 px-4">
       <div className="text-center max-w-2xl">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
           Welcome to School Management
