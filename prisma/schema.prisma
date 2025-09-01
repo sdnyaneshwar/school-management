@@ -7,13 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model School {
+model school {
   id       Int    @id @default(autoincrement())
   name     String
   address  String
   city     String
   state    String
   contact  BigInt
-  image    String
   email_id String
+  image    String
 }

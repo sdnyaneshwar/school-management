@@ -34,9 +34,13 @@ export default function AddSchool() {
     resolver: zodResolver(schema),
   });
   const [submitStatus, setSubmitStatus] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async (data) => {
     console.log('Form data:', data);
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       if (key === 'image') {
@@ -60,16 +64,18 @@ export default function AddSchool() {
         setSubmitStatus('School added successfully!');
         reset();
       } else {
-        setSubmitStatus(`Error: ${result.error}`);
+        setSubmitStatus(`Error: ${result.error || 'Failed to add school'}${result.details ? ` - ${result.details}` : ''}`);
       }
     } catch (error) {
-      setSubmitStatus('Error submitting form');
+      setSubmitStatus(`Error submitting form: ${error.message}`);
       console.error('Submission error:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen text-gray-600 bg-gradient-to-b from-blue-100 to-white flex flex-col items-center py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-b text-gray-500 from-blue-100 to-white flex flex-col items-center py-10 px-4">
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-lg">
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Add a New School</h1>
         <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
@@ -79,6 +85,7 @@ export default function AddSchool() {
               {...register('name')}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               placeholder="Enter school name"
+              disabled={isSubmitting}
             />
             {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
           </div>
@@ -88,6 +95,7 @@ export default function AddSchool() {
               {...register('address')}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               placeholder="Enter address"
+              disabled={isSubmitting}
             />
             {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address.message}</p>}
           </div>
@@ -97,6 +105,7 @@ export default function AddSchool() {
               {...register('city')}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               placeholder="Enter city"
+              disabled={isSubmitting}
             />
             {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city.message}</p>}
           </div>
@@ -106,6 +115,7 @@ export default function AddSchool() {
               {...register('state')}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               placeholder="Enter state"
+              disabled={isSubmitting}
             />
             {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state.message}</p>}
           </div>
@@ -115,6 +125,7 @@ export default function AddSchool() {
               {...register('contact')}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               placeholder="Enter 10-digit contact number"
+              disabled={isSubmitting}
             />
             {errors.contact && <p className="text-red-500 text-sm mt-1">{errors.contact.message}</p>}
           </div>
@@ -124,6 +135,7 @@ export default function AddSchool() {
               {...register('email_id')}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               placeholder="Enter email address"
+              disabled={isSubmitting}
             />
             {errors.email_id && <p className="text-red-500 text-sm mt-1">{errors.email_id.message}</p>}
           </div>
@@ -134,14 +146,16 @@ export default function AddSchool() {
               {...register('image')}
               accept="image/jpeg,image/png"
               className="w-full p-3 border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              disabled={isSubmitting}
             />
             {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image.message}</p>}
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition transform hover:scale-105"
+            className="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition transform hover:scale-105 disabled:bg-blue-300"
+            disabled={isSubmitting}
           >
-            Add School
+            {isSubmitting ? 'Submitting...' : 'Add School'}
           </button>
         </form>
         {submitStatus && (
