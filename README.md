@@ -4,7 +4,7 @@ A modern, full-stack web application for managing school records, built with **N
 
 ## Live Demo
 
-- **Deployed URL**: [https://school-management.vercel.app](https://school-management.vercel.app)
+- **Deployed URL**: [https://vercel.com/dnyaneshwars-projects-936dcd1a/school-management](https://vercel.com/dnyaneshwars-projects-936dcd1a/school-management)
 - **GitHub Repository**: [https://github.com/sdnyaneshwar/school-management](https://github.com/sdnyaneshwar/school-management)
 
 ## Features
